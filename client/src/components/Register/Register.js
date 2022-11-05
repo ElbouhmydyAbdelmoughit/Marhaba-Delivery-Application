@@ -1,34 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Login from "../Login/Login";
+// import Login from "../Login/Login";
+import axios from "axios";
 
-export const Register = () => {
+const Register = () => {
   /* Create use state */
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirm_password, setConfirm_password] = useState(null);
 
-  const handleInputChange = (event) => {
-    const { id, value } = event.target;
-    if (id === "name") {
-      setName(value);
-    }
-    if (id === "email") {
-      setEmail(value);
-    }
-    if (id === "password") {
-      setPassword(value);
-    }
-    if (id === "confirm_Password") {
-      setConfirm_password(value);
-    }
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
   };
 
-  const handleSubmit = () => {
-    console.log(name + " " + email + " " + password + " " + confirm_password);
+  //register function
+  const submit = () => {
+    const { name, email, password } = user;
+    if (name && email && password) {
+      axios
+        .post("http://localhost:8080/Register", user)
+        .then((res) => console.log(res));
+    } else {
+      console.log("error");
+    }
   };
-
   return (
     <div>
       <section className="ftco-section">
@@ -55,7 +55,7 @@ export const Register = () => {
                       <h3 className="mb-4">Sign In</h3>
                     </div>
                   </div>
-                  <form action="#" className="signin-form">
+                  <form action="#" onSubmit={submit} className="signin-form">
                     <div className="form-group mb-3">
                       <label className="label">Username</label>
                       <input
@@ -63,7 +63,7 @@ export const Register = () => {
                         className="form-control"
                         placeholder="Username"
                         id="name"
-                        onChange={(event)=>setName(event.target.value)}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group mb-3">
@@ -73,7 +73,7 @@ export const Register = () => {
                         className="form-control"
                         placeholder="Email"
                         id="email"
-                        onChange={(event)=>setEmail(event.target.value)}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group mb-3">
@@ -83,7 +83,7 @@ export const Register = () => {
                         className="form-control"
                         placeholder="Password"
                         id="password"
-                        onChange={(event)=>setPassword(event.target.value)}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group mb-3">
@@ -93,16 +93,13 @@ export const Register = () => {
                         className="form-control"
                         placeholder="Confirm Password"
                         id="confirm_password"
-                        onChange={(event)=>setConfirm_password(event.target.value)}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group">
                       <button
                         type="submit"
                         className="form-control btn btn-primary submit px-3"
-                        onClick={() => {
-                          handleSubmit();
-                        }}
                       >
                         Sign Up
                       </button>
