@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // import Login from "../Login/Login";
-import axios from "axios";
+// import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   /* Create use state */
@@ -13,22 +15,15 @@ const Register = () => {
     confirm_password: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+  const handleChanged = (e) => {
+    const { id, value } = e.target;
+    setUser({ ...user, [id]: value });
   };
 
-  //register function
-  const submit = () => {
-    const { name, email, password } = user;
-    if (name && email && password) {
-      axios
-        .post("http://localhost:8080/Register", user)
-        .then((res) => console.log(res));
-    } else {
-      console.log("error");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
+
   return (
     <div>
       <section className="ftco-section">
@@ -55,7 +50,7 @@ const Register = () => {
                       <h3 className="mb-4">Sign In</h3>
                     </div>
                   </div>
-                  <form action="#" onSubmit={submit} className="signin-form">
+                  <form action="#" className="signin-form">
                     <div className="form-group mb-3">
                       <label className="label">Username</label>
                       <input
@@ -63,7 +58,7 @@ const Register = () => {
                         className="form-control"
                         placeholder="Username"
                         id="name"
-                        onChange={handleChange}
+                        onChange={handleChanged}
                       />
                     </div>
                     <div className="form-group mb-3">
@@ -73,7 +68,7 @@ const Register = () => {
                         className="form-control"
                         placeholder="Email"
                         id="email"
-                        onChange={handleChange}
+                        onChange={handleChanged}
                       />
                     </div>
                     <div className="form-group mb-3">
@@ -83,23 +78,24 @@ const Register = () => {
                         className="form-control"
                         placeholder="Password"
                         id="password"
-                        onChange={handleChange}
+                        onChange={handleChanged}
                       />
                     </div>
                     <div className="form-group mb-3">
                       <label className="label">Confir Password</label>
                       <input
-                        type="confirm_password"
+                        type="password"
                         className="form-control"
                         placeholder="Confirm Password"
                         id="confirm_password"
-                        onChange={handleChange}
+                        onChange={handleChanged}
                       />
                     </div>
                     <div className="form-group">
                       <button
                         type="submit"
                         className="form-control btn btn-primary submit px-3"
+                        onClick={handleSubmit}
                       >
                         Sign Up
                       </button>
@@ -114,5 +110,4 @@ const Register = () => {
     </div>
   );
 };
-
 export default Register;

@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div>
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-sm navbar-light bg-light">
           <a className="navbar-brand" href="#">
             Navbar
           </a>
@@ -21,12 +21,16 @@ const Home = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item active">
-                <Link to="/Login">Login</Link>
+              <li className="nav-item active ">
+                <Link to="/Login" className="nav-link ">
+                  Login
+                </Link>
               </li>
 
               <li className="nav-item">
-                <Link to="/Register">Register</Link>
+                <Link to="/Register" className="nav-link text-end">
+                  Register
+                </Link>
               </li>
             </ul>
           </div>

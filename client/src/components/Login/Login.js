@@ -28,17 +28,6 @@ const Login = () => {
                     <div className="w-100">
                       <h3 className="mb-4">Sign In</h3>
                     </div>
-                    <div className="w-100">
-                      <Link to={""}>
-                        <FaFacebook />
-                      </Link>
-                      <Link
-                        to={""}
-                        className="social-icon d-flex align-items-center justify-content-center"
-                      >
-                        <i className="FaFacebook"></i>
-                      </Link>
-                    </div>
                   </div>
                   <form action="#" className="signin-form">
                     <div className="form-group mb-3">
