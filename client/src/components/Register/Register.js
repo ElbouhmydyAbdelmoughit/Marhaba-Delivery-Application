@@ -5,6 +5,18 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const generator = (type, message) => {
+  if (type === "error") {
+    toast.error(message, { position: "top-right" });
+  }
+  if (type === "success") {
+    toast.success(message, { position: "top-right" });
+  }
+};
+// const generateError = (error) =>
+//   toast.error(error, {
+//     position: "top-right",
+//   });
 const Register = () => {
   /* Create use state */
 
@@ -22,6 +34,11 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!user.name) {
+      generator("error", "please enter name");
+    } else {
+      generator("success", "Good name");
+    }
   };
 
   return (
@@ -107,6 +124,7 @@ const Register = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 };
