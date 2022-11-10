@@ -7,21 +7,26 @@ const authRoute = require("./routes/auth");
 const roleRouter = require("./routes/role");
 const { error, success } = require("consola");
 
-mongoose.connect(
-  process.env.DATA_COONECTION,
-  {
+mongoose
+  .connect(process.env.DATA_COONECTION, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
-  },
-  () => {
+  })
+  .then(() => {
     success({ message: "database is connected", badge: true });
-  }
-);
+  })
+  .catch((err) => {
+    error({ message: err.message, badge: true });
+  });
 
-const URL = "http://localhost:3000/";
-app.use(cors(URL));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+  })
+);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoute);
 app.use("/api/auth/", roleRouter);

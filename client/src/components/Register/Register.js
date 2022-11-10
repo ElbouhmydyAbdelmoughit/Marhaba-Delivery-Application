@@ -1,22 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import Login from "../Login/Login";
-// import axios from "axios";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const URL = "http://localhost:8080/api/auth/";
+
+/**
+ * If the type is error, then display an error message. If the type is success, then display a success
+ * message.
+ * @param type - This is the type of the toast. It can be either error or success.
+ * @param message - The message you want to display
+ */
 const generator = (type, message) => {
   if (type === "error") {
-    toast.error(message, { position: "top-right" });
+    toast.error(message, { position: "bottom-right" });
   }
   if (type === "success") {
-    toast.success(message, { position: "top-right" });
+    toast.success(message, { position: "bottom-right" });
   }
 };
-// const generateError = (error) =>
-//   toast.error(error, {
-//     position: "top-right",
-//   });
+
 const Register = () => {
   /* Create use state */
 
@@ -32,12 +36,34 @@ const Register = () => {
     setUser({ ...user, [id]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user.name) {
-      generator("error", "please enter name");
-    } else {
-      generator("success", "Good name");
+    if (user.name.trim() === "") {
+      console.log("entre name");
+    }
+    if (user.email.trim() === "") {
+      console.log("entre email");
+    }
+    if (user.password.trim() === "") {
+      console.log("entre password");
+    }
+    if (user.confirm_password.trim() === "") {
+      console.log("entre confirm password");
+      if (user.password !== user.confirm_password) {
+        console.log("password or confirm password incorrect");
+      }
+    }
+    try {
+      const data = await axios.post(URL + "register", {
+        ...user,
+      });
+      if (data) {
+        generator("success", "data is sended successfully");
+      } else {
+        console.log("not ok");
+      }
+    } catch (error) {
+      generator("error", error);
     }
   };
 

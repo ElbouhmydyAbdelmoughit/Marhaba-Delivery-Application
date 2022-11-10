@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { FaFacebook } from "react-icons/fa";
 import "./Login.css";
 
 const Login = () => {

@@ -1,0 +1,48 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.div_home{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.container_home{
+  text-align: center;
+  min-width: 300px;
+  min-height: 120px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 30px rgb(191, 191, 191);
+  padding: 20px 10px;
+}
+.container h5{
+  text-align: center;
+}
+.btn_login{
+  border-radius: 3px;
+  box-shadow: inset 3px 3px 20px #FF8303,3px 3px 20px rgba(255, 131, 3, 1);
+  border: none;
+  margin-right: 5px;
+  padding: 3px 20px;
+  background-color: #FF8303;
+}
+.btn_login .text_login{
+  color: white;
+}
+.btn_register{
+  border-radius: 3px;
+  box-shadow: inset 3px 3px 20px #FF8303,3px 3px 20px rgba(255, 131, 3, 1);
+  background-color: #FF8303;
+  border: none;
+  margin-left: 5px;
+  padding: 3px 20px;
+}
+
+.btn_register .text_register{
+  color: white;
+}
