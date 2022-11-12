@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const URL = "http://localhost:8080/api/auth/";
 
@@ -22,6 +21,7 @@ const generator = (type, message) => {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
   /* Create use state */
 
   const [user, setUser] = useState({
@@ -36,35 +36,32 @@ const Register = () => {
     setUser({ ...user, [id]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
     if (user.name.trim() === "") {
-      console.log("entre name");
+      generator("error", "Please Entre Your Name");
+    } else if (user.email.trim() === "") {
+      generator("error", "Please Entre Your Email");
+    } else if (user.password.trim() === "") {
+      generator("error", "Please Entre Your Password");
+    } else if (user.confirm_password.trim() === "") {
+      generator("error", "Please Confirm Password");
+    } else if (user.password !== user.confirm_password) {
+      generator("error", "Oops Password or Confirm Password Incorrect");
     }
-    if (user.email.trim() === "") {
-      console.log("entre email");
-    }
-    if (user.password.trim() === "") {
-      console.log("entre password");
-    }
-    if (user.confirm_password.trim() === "") {
-      console.log("entre confirm password");
-      if (user.password !== user.confirm_password) {
-        console.log("password or confirm password incorrect");
-      }
-    }
-    try {
-      const data = await axios.post(URL + "register", {
+
+    e.preventDefault();
+
+    axios
+      .post(URL + "register", {
         ...user,
+      })
+      .then(() => {
+        generator("success", "Registeration is successfully 😊");
+        navigate("/Login");
+      })
+      .catch((error) => {
+        generator("error", error.response.data);
       });
-      if (data) {
-        generator("success", "data is sended successfully");
-      } else {
-        console.log("not ok");
-      }
-    } catch (error) {
-      generator("error", error);
-    }
   };
 
   return (

@@ -11,10 +11,7 @@ const mainFunction = require("./nodemailer");
 /* Register User */
 const register = async (req, res) => {
   const emailExist = await User.findOne({ email: req.body.email });
-  if (emailExist) return res.status(400).send("Email already exist");
-  // // let role = await Role.findOne({ role: "client" });
-  // let role = await Role.findOne({ role: "client" });
-
+  if (emailExist) return res.status(401).send("Email already exist");
   const errors = validationResult(req);
   let passwordHash = await bcrypt.hash(req.body.password, 8);
   if (errors.isEmpty()) {
