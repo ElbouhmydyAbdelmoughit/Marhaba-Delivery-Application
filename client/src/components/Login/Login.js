@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-// import axios from "axios";
+import axios from "axios";
 import Generator from "../../help/Generator";
 import "./Login.css";
 
-// const URL = "http://localhost:8080/api/auth/";
+const URL = "http://localhost:8080/api/auth/";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -23,6 +23,16 @@ const Login = () => {
     } else if (user.password.trim() === "") {
       Generator("error", "Please Entre Your Password");
     }
+    axios
+      .post(URL + "login", {
+        ...user,
+      })
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((error) => {
+        Generator("error", error.response.data);
+      });
   };
   return (
     <div>
