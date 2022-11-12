@@ -1,24 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import Generator from "../../help/Generator";
 
 const URL = "http://localhost:8080/api/auth/";
-
-/**
- * If the type is error, then display an error message. If the type is success, then display a success
- * message.
- * @param type - This is the type of the toast. It can be either error or success.
- * @param message - The message you want to display
- */
-const generator = (type, message) => {
-  if (type === "error") {
-    toast.error(message, { position: "bottom-right" });
-  }
-  if (type === "success") {
-    toast.success(message, { position: "bottom-right" });
-  }
-};
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,30 +23,29 @@ const Register = () => {
   };
 
   const handleSubmit = (e) => {
-    if (user.name.trim() === "") {
-      generator("error", "Please Entre Your Name");
-    } else if (user.email.trim() === "") {
-      generator("error", "Please Entre Your Email");
-    } else if (user.password.trim() === "") {
-      generator("error", "Please Entre Your Password");
-    } else if (user.confirm_password.trim() === "") {
-      generator("error", "Please Confirm Password");
-    } else if (user.password !== user.confirm_password) {
-      generator("error", "Oops Password or Confirm Password Incorrect");
-    }
-
     e.preventDefault();
+    if (user.name.trim() === "") {
+      Generator("error", "Please Entre Your Name");
+    } else if (user.email.trim() === "") {
+      Generator("error", "Please Entre Your Email");
+    } else if (user.password.trim() === "") {
+      Generator("error", "Please Entre Your Password");
+    } else if (user.confirm_password.trim() === "") {
+      Generator("error", "Please Confirm Password");
+    } else if (user.password !== user.confirm_password) {
+      Generator("error", "Oops Password or Confirm Password Incorrect");
+    }
 
     axios
       .post(URL + "register", {
         ...user,
       })
       .then(() => {
-        generator("success", "Registeration is successfully 😊");
+        Generator("success", "Registeration is successfully 😊");
         navigate("/Login");
       })
       .catch((error) => {
-        generator("error", error.response.data);
+        Generator("error", error.response.data);
       });
   };
 

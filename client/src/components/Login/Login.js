@@ -1,7 +1,29 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+// import axios from "axios";
+import Generator from "../../help/Generator";
 import "./Login.css";
 
+// const URL = "http://localhost:8080/api/auth/";
+
 const Login = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChanged = (e) => {
+    const { id, value } = e.target;
+    setUser({ ...user, [id]: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (user.email.trim() === "") {
+      Generator("error", "Please Entre Your Email");
+    } else if (user.password.trim() === "") {
+      Generator("error", "Please Entre Your Password");
+    }
+  };
   return (
     <div>
       <section className="ftco-section">
@@ -34,7 +56,9 @@ const Login = () => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Username"
+                        placeholder="Email"
+                        id="email"
+                        onChange={handleChanged}
                       />
                     </div>
                     <div className="form-group mb-3">
@@ -43,12 +67,15 @@ const Login = () => {
                         type="password"
                         className="form-control"
                         placeholder="Password"
+                        id="password"
+                        onChange={handleChanged}
                       />
                     </div>
                     <div className="form-group">
                       <button
                         type="submit"
                         className="form-control btn btn-primary submit px-3"
+                        onClick={handleSubmit}
                       >
                         Sign In
                       </button>
@@ -65,6 +92,7 @@ const Login = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 };
