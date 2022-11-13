@@ -9,7 +9,7 @@ router.post(
   [
     check("name").trim().escape().notEmpty(),
     check("email").isEmail().notEmpty(),
-    check("password").trim().escape().notEmpty().isLength({ min: 5 }),
+    check("password").trim().escape().notEmpty().isLength({ min: 5, max: 12 }),
   ],
   register
 );

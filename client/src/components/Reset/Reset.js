@@ -1,50 +1,15 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import axios from "axios";
-import Generator from "../../help/Generator";
-import "./Login.css";
+// import Generator from "../../help/Generator";
+// const [reset, setReset] = useState({
+//email:""
+//first_password:"",
+//new_password:""
+//});
+const Reset = () => {
+  const handleChanged = () => {};
+  const handleSubmit = () => {};
 
-const URL = "http://localhost:8080/api/auth/";
-
-const Login = () => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  /* When the user changes the value of an input, update the state of the user object with the new value. */
-  const handleChanged = (e) => {
-    const { id, value } = e.target;
-    setUser({ ...user, [id]: value });
-  };
-
-  /* function to send data to server and return data and verify are this data is correct*/
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (user.email.trim() === "") {
-      Generator("error", "Please Entre Your Email");
-    } else if (user.password.trim() === "") {
-      Generator("error", "Please Entre Your Password");
-    }
-    axios
-      .post(URL + "login", {
-        ...user,
-      })
-      .then((data) => {
-        if (data.data.role === "client") {
-          console.log("welcome to client pages");
-        }
-        if (data.data.role === "livreur") {
-          console.log("welcome to livruer pages");
-        }
-      })
-      .catch((error) => {
-        Generator("error", error.response.data);
-      });
-  };
-
-  /* Returning the view for the login page. */
   return (
     <div>
       <section className="ftco-section">
@@ -55,20 +20,17 @@ const Login = () => {
               <div className="wrap d-md-flex">
                 <div className="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
                   <div className="text w-100">
-                    <h2>Welcome to login</h2>
-                    <p>Don't have an account?</p>
-                    <Link
-                      to="/Register"
-                      className="btn btn-white btn-outline-white"
-                    >
-                      Sign Up
+                    <h2>Reset Password</h2>
+                    <p>If you want to Back To Home page click on home button</p>
+                    <Link to="/" className="btn btn-white btn-outline-white">
+                      Home
                     </Link>
                   </div>
                 </div>
                 <div className="login-wrap p-4 p-lg-5">
                   <div className="d-flex">
                     <div className="w-100">
-                      <h3 className="mb-4">Sign In</h3>
+                      <h3 className="mb-4">Reset Password</h3>
                     </div>
                   </div>
                   <form action="#" className="signin-form">
@@ -83,13 +45,23 @@ const Login = () => {
                       />
                     </div>
                     <div className="form-group mb-3">
-                      <label className="label">Password</label>
+                      <label className="label">First Password</label>
                       <input
                         type="password"
                         className="form-control"
-                        placeholder="Password"
+                        placeholder="First Password"
+                        id="first_password"
+                        onChange={handleChanged}
+                      />
+                    </div>
+                    <div className="form-group mb-3">
+                      <label className="label">New Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="New Password"
                         autoComplete="on"
-                        id="password"
+                        id="new_password"
                         onChange={handleChanged}
                       />
                     </div>
@@ -99,13 +71,8 @@ const Login = () => {
                         className="form-control btn btn-primary submit px-3"
                         onClick={handleSubmit}
                       >
-                        Sign In
+                        Reset
                       </button>
-                    </div>
-                    <div className="form-group d-md-flex">
-                      <div className="w-50 text-md-right">
-                        <Link to={""}>Forgot Password</Link>
-                      </div>
                     </div>
                   </form>
                 </div>
@@ -119,4 +86,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Reset;

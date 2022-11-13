@@ -32,6 +32,8 @@ const Register = () => {
       Generator("error", "Please Entre Your Password");
     } else if (user.confirm_password.trim() === "") {
       Generator("error", "Please Confirm Password");
+    } else if (user.password.length < 5 || user.password.length > 12) {
+      Generator("error", "Oops Entre Password between 5 and 12 caracter");
     } else if (user.password !== user.confirm_password) {
       Generator("error", "Oops Password or Confirm Password Incorrect");
     }
@@ -102,6 +104,7 @@ const Register = () => {
                         type="password"
                         className="form-control"
                         placeholder="Password"
+                        autoComplete="on"
                         id="password"
                         onChange={handleChanged}
                       />
@@ -113,6 +116,7 @@ const Register = () => {
                         className="form-control"
                         placeholder="Confirm Password"
                         id="confirm_password"
+                        autoComplete="on"
                         onChange={handleChanged}
                       />
                     </div>

@@ -31,10 +31,14 @@ const main = () => {
 const confirmation = (req, res) => {
   const token = req.params.token;
   const tokenVerif = jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
-  const email = tokenVerif.email;
-  User.findByIdAndUpdate({ email: email }, { confirm: true }).then((data) => {
-    res.status(200).send("Your account is confirmed");
-  });
+  console.log(tokenVerif);
+  User.findOneAndUpdate({ email: tokenVerif.email }, { confirm: true })
+    .then(() => {
+      res.status(201).send("Your account is confirmed");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 module.exports = { main, confirmation };

@@ -36,24 +36,27 @@ const login = (req, res) => {
   User.findOne({ email: req.body.email })
     .then((data) => {
       if (data) {
-        // if (data.confirm == true) {
-        bcrypt.compare(req.body.password, data.password).then((dataLogin) => {
-          if (dataLogin) {
-            const token = jwt.sign(
-              {
-                _id: data._id,
-                name: data.name,
-                role: data.role,
-              },
-              process.env.TOKEN_SECRET
-            );
-            res.status(200).send(jwt.verify(token, process.env.TOKEN_SECRET));
-          } else res.status(400).send("password incurrect");
-        });
-        // } else return res.status(401).send("Your account is not confirmed");
-      } else res.status(400).send("email incurrect");
+        if (data.confirm == true) {
+          bcrypt.compare(req.body.password, data.password).then((dataLogin) => {
+            if (dataLogin) {
+              const token = jwt.sign(
+                {
+                  _id: data._id,
+                  name: data.name,
+                  role: data.role,
+                },
+                process.env.TOKEN_SECRET
+              );
+              localStorage(token);
+              res.status(200).send(jwt.verify(token, process.env.TOKEN_SECRET));
+            } else res.status(400).send("password incurrect");
+          });
+        } else return res.status(401).send("Your account is not confirmed");
+      } else return res.status(400).send("email incurrect");
     })
-    .catch((err) => res.status(400).send(err));
+    .catch((err) => {
+      return res.status(400).send(err);
+    });
 };
 
 /* Reset Password */
