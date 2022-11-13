@@ -28,10 +28,15 @@ const Login = () => {
         ...user,
       })
       .then((data) => {
-        console.log(data.data);
+        if (data.data.role === "client") {
+          console.log("welcome to client pages");
+        }
+        if (data.data.role === "livreur") {
+          console.log("welcome to livruer pages");
+        }
       })
       .catch((error) => {
-        Generator("error", error.response.data);
+        Generator("error", error);
       });
   };
   return (

@@ -43,12 +43,11 @@ const login = (req, res) => {
               {
                 _id: data._id,
                 name: data.name,
-                email: data.email,
+                role: data.role,
               },
               process.env.TOKEN_SECRET
             );
-            localStorage("token", token);
-            res.status(200).send(token);
+            res.status(200).send(jwt.verify(token, process.env.TOKEN_SECRET));
           } else res.status(400).send("password incurrect");
         });
         // } else return res.status(401).send("Your account is not confirmed");
