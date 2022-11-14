@@ -47,7 +47,7 @@ const login = (req, res) => {
                 },
                 process.env.TOKEN_SECRET
               );
-              localStorage(token);
+              // localStorage("token",token);
               res.status(200).send(jwt.verify(token, process.env.TOKEN_SECRET));
             } else res.status(400).send("password incurrect");
           });
@@ -60,30 +60,32 @@ const login = (req, res) => {
 };
 
 /* Reset Password */
-const reset = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    return res.status(400).send("This Email Not exist");
-  }
-  try {
-    const comparePassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (comparePassword) {
-      const newPasswordHash = await bcrypt.hash(req.body.newPassword, 10);
-
-      const newUser = await User.updateOne(
-        { email: req.body.email },
-        { password: newPasswordHash }
-      );
-      if (newUser) {
-        res.status(200).send("Reset seccussfully");
-      }
-    } else res.status(400).send("First Password incorrect");
-  } catch (error) {
-    res.status(400).send(error);
-  }
+const reset = (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((emailExist) => {
+      bcrypt
+        .compare(req.body.password, emailExist.password)
+        .then((comparePassword) => {
+          if (comparePassword) {
+            bcrypt
+              .hash(req.body.newPassword, 10)
+              .then((dataHash) => {
+                User.updateOne(
+                  { email: req.body.email },
+                  { password: dataHash }
+                ).then(() => {
+                  return res.status(200).send("Reset SuccessFully");
+                });
+              })
+              .catch((error) => {
+                return res.status(400).send(error + " password not hashed");
+              });
+          } else return res.status(400).send("This passowrd incorrect");
+        });
+    })
+    .catch(() => {
+      return res.status(400).send(" This email not exist");
+    });
 };
 
 module.exports = {

@@ -17,6 +17,11 @@ const Home = () => {
             Register
           </Link>
         </button>
+        <button className="btn_register">
+          <Link className="text_register" to="/Reset">
+            Reset
+          </Link>
+        </button>
       </div>
     </div>
   );

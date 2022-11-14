@@ -1,14 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-// import Generator from "../../help/Generator";
-// const [reset, setReset] = useState({
-//email:""
-//first_password:"",
-//new_password:""
-//});
+import Generator from "../../help/Generator";
+import axios from "axios";
+const URL = "http://localhost:8080/api/auth/";
+
+/* Function Reset Password */
 const Reset = () => {
-  const handleChanged = () => {};
-  const handleSubmit = () => {};
+  const [reset, setReset] = useState({
+    email: "",
+    password: "",
+    newPassword: "",
+  });
+  const handleChanged = (e) => {
+    const { id, value } = e.target;
+    setReset({ ...reset, [id]: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(URL + "reset", { ...reset })
+      .then((dataReset) => {
+        Generator("success", dataReset.data);
+      })
+      .catch((error) => {
+        Generator("error", error.response.data);
+      });
+  };
 
   return (
     <div>
@@ -50,7 +68,7 @@ const Reset = () => {
                         type="password"
                         className="form-control"
                         placeholder="First Password"
-                        id="first_password"
+                        id="password"
                         onChange={handleChanged}
                       />
                     </div>
@@ -61,7 +79,7 @@ const Reset = () => {
                         className="form-control"
                         placeholder="New Password"
                         autoComplete="on"
-                        id="new_password"
+                        id="newPassword"
                         onChange={handleChanged}
                       />
                     </div>

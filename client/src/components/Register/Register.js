@@ -110,7 +110,7 @@ const Register = () => {
                       />
                     </div>
                     <div className="form-group mb-3">
-                      <label className="label">Confir Password</label>
+                      <label className="label">Confirm Password</label>
                       <input
                         type="password"
                         className="form-control"
