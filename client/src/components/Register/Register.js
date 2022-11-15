@@ -30,25 +30,26 @@ const Register = () => {
       Generator("error", "Please Entre Your Email");
     } else if (user.password.trim() === "") {
       Generator("error", "Please Entre Your Password");
+    } else if (user.password.length < 5 || user.password.length > 12) {
+      Generator("error", "Oops Entre Password between 5 and 12 caracter");
     } else if (user.confirm_password.trim() === "") {
       Generator("error", "Please Confirm Password");
     } else if (user.password.length < 5 || user.password.length > 12) {
       Generator("error", "Oops Entre Password between 5 and 12 caracter");
     } else if (user.password !== user.confirm_password) {
       Generator("error", "Oops Password or Confirm Password Incorrect");
+    } else {
+      axios
+        .post(URL + "register", {
+          ...user,
+        })
+        .then(() => {
+          navigate("/Login", { state: "Registeration is successfully 😊" });
+        })
+        .catch((error) => {
+          Generator("error", error.response.data);
+        });
     }
-
-    axios
-      .post(URL + "register", {
-        ...user,
-      })
-      .then(() => {
-        Generator("success", "Registeration is successfully 😊");
-        navigate("/Login");
-      })
-      .catch((error) => {
-        Generator("error", error.response.data);
-      });
   };
 
   return (

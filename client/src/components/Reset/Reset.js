@@ -18,14 +18,26 @@ const Reset = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(URL + "reset", { ...reset })
-      .then((dataReset) => {
-        Generator("success", dataReset.data);
-      })
-      .catch((error) => {
-        Generator("error", error.response.data);
-      });
+    if (reset.email.trim() === "") {
+      Generator("error", "Please Entre Your Email");
+    } else if (reset.password.trim() === "") {
+      Generator("error", "Please Entre Your Password");
+    } else if (reset.password.length < 5 || reset.password.length > 12) {
+      Generator("error", "Oops Entre Password between 5 and 12 caracter");
+    } else if (reset.newPassword.trim() === "") {
+      Generator("error", "Please Enter New Password");
+    } else if (reset.newPassword.length < 5 || reset.newPassword.length > 12) {
+      Generator("error", "Oops Entre New Password between 5 and 12 caracter");
+    } else {
+      axios
+        .post(URL + "reset", { ...reset })
+        .then((dataReset) => {
+          Generator("success", dataReset.data);
+        })
+        .catch((error) => {
+          Generator("error", error.response.data);
+        });
+    }
   };
 
   return (

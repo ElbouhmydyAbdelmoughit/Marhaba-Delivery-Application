@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import Generator from "../../help/Generator";
@@ -8,6 +8,11 @@ import "./Login.css";
 const URL = "http://localhost:8080/api/auth/";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const localtion = useLocation();
+  useEffect(() => {
+    Generator("success", localtion.state);
+  }, []);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -26,22 +31,25 @@ const Login = () => {
       Generator("error", "Please Entre Your Email");
     } else if (user.password.trim() === "") {
       Generator("error", "Please Entre Your Password");
+    } else if (user.password.length < 5 || user.password.length > 12) {
+      Generator("error", "Oops Entre Password between 5 and 12 caracter");
+    } else {
+      axios
+        .post(URL + "login", {
+          ...user,
+        })
+        .then((data) => {
+          if (data.data.role === "client") {
+            console.log(data.data.role);
+            navigate("/Client", { state: data.data.role });
+          } else if (data.data.role === "livreur") {
+            navigate("/Livreur", { state: data.data.role });
+          }
+        })
+        .catch((error) => {
+          Generator("error", error.response.data);
+        });
     }
-    axios
-      .post(URL + "login", {
-        ...user,
-      })
-      .then((data) => {
-        if (data.data.role === "client") {
-          console.log("welcome to client pages");
-        }
-        if (data.data.role === "livreur") {
-          console.log("welcome to livruer pages");
-        }
-      })
-      .catch((error) => {
-        Generator("error", error.response.data);
-      });
   };
 
   /* Returning the view for the login page. */
