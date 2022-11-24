@@ -39,12 +39,9 @@ const Login = () => {
           ...user,
         })
         .then((data) => {
-          if (data.data.role === "client") {
-            console.log(data.data.role);
-            navigate("/Client", { state: data.data.role });
-          } else if (data.data.role === "livreur") {
-            navigate("/Livreur", { state: data.data.role });
-          }
+          data.data.role === "client"
+            ? navigate("/Client", { state: data.data.role })
+            : navigate("/Livreur", { state: data.data.role });
         })
         .catch((error) => {
           Generator("error", error.response.data);

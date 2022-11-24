@@ -15,6 +15,7 @@ const register = async (req, res) => {
   const errors = validationResult(req);
   let passwordHash = await bcrypt.hash(req.body.password, 8);
   if (errors.isEmpty()) {
+    /* Saving the email to localStorage. for sending confirmation account */
     localStorage("emailCofirmation", req.body.email);
     mainFunction.main();
     let user = new User({
@@ -47,7 +48,7 @@ const login = (req, res) => {
                 },
                 process.env.TOKEN_SECRET
               );
-              // localStorage("token",token);
+              // localStorage("token",token);// saving role for authorization roles in future
               res.status(200).send(jwt.verify(token, process.env.TOKEN_SECRET));
             } else res.status(400).send("password incurrect");
           });
@@ -71,7 +72,7 @@ const reset = (req, res) => {
               .hash(req.body.newPassword, 10)
               .then((dataHash) => {
                 User.updateOne(
-                  { email: req.body.email },
+                  { email: req.body.email },  
                   { password: dataHash }
                 ).then(() => {
                   return res.status(200).send("Reset SuccessFully");
