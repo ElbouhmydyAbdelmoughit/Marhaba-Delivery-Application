@@ -25,11 +25,11 @@ const register = async (req, res) => {
     });
     try {
       const userSaved = await user.save();
-      res.status(200).send(userSaved);
+      res.status(200).send("user created successFully");
     } catch (err) {
       console.log(err);
     }
-  } else return res.status(404).send(errors);
+  } else return res.status(400).send(errors);
 };
 
 /* Login User */
@@ -72,7 +72,7 @@ const reset = (req, res) => {
               .hash(req.body.newPassword, 10)
               .then((dataHash) => {
                 User.updateOne(
-                  { email: req.body.email },  
+                  { email: req.body.email },
                   { password: dataHash }
                 ).then(() => {
                   return res.status(200).send("Reset SuccessFully");

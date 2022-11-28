@@ -31,9 +31,4 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoute);
 app.use("/api/auth/", roleRouter);
 
-app.listen(process.env.PORT || 8080, () => {
-  success({
-    message: "app listening on port: " + process.env.PORT,
-    badge: true,
-  });
-});
+module.exports = app;

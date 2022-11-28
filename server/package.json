@@ -2,9 +2,9 @@
   "name": "mongoose-express-crud",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon server.js",
     "preinstall": "npm i nodemon -g"
   },
   "author": "",
@@ -19,6 +19,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.16.2",
     "express-validator": "^6.14.2",
+    "jest": "^29.3.1",
     "jsonwebtoken": "^8.5.1",
     "local-storage": "^2.0.0",
     "mongoose": "^5.0.3",
@@ -26,6 +27,7 @@
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
     "react-cookie": "^4.1.1",
-    "react-toastify": "^9.0.8"
+    "react-toastify": "^9.0.8",
+    "supertest": "^6.3.1"
   }
 }
