@@ -6,7 +6,7 @@ const Role = require("../models/Role");
 const jwt = require("jsonwebtoken");
 const tokenVerify = require("../routes/middlewares/verificationToken");
 const localStorage = require("local-storage");
-const mainFunction = require("./nodemailer");
+const mainFunction = require("./SendEmail");
 
 /* Register User */
 const register = async (req, res) => {

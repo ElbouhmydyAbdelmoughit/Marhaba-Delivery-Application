@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { login, register, reset } = require("../controllers/authController");
 const { check, validationResult } = require("express-validator");
 const verifyToken = require("./middlewares/verificationToken");
-const { confirmation } = require("../controllers/nodemailer");
+const { confirmation } = require("../controllers/SendEmail");
 
 router.post(
   "/register",

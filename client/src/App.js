@@ -10,19 +10,24 @@ import Reset from "./components/Reset/Reset";
 import Client from "./components/Client/Client";
 import Livreur from "./components/Livreur/Livreur";
 import ERROR404 from "./components/ERROR404/ERROR404";
+import store from "./store";
+import { Provider } from "react-redux";
+
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<ERROR404 />} />
-        <Route path="/" element={<Home />} />
-        <Route path="Login" element={<Login />} />
-        <Route path="Register" element={<Register />} />
-        <Route path="Reset" element={<Reset />} />
-        <Route path="Client" element={<Client />} />
-        <Route path="Livreur" element={<Livreur />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<ERROR404 />} />
+          <Route path="/" element={<Home />} />
+          <Route path="Login" element={<Login />} />
+          <Route path="Register" element={<Register />} />
+          <Route path="Reset" element={<Reset />} />
+          <Route path="Client" element={<Client />} />
+          <Route path="Livreur" element={<Livreur />} />
+        </Routes>
+      </BrowserRouter>
+     </Provider>
   );
 };
 

@@ -12,7 +12,7 @@ describe("Testing For EndPoint Register", () => {
   test("create new user", async () => {
     const res = await request(app).post("/api/auth/register").send({
       name: "ahmed",
-      email: "8acb9sc7x1@inboxmail.life",
+      email: "8acb9scc7x1@inboxmail.life",
       password: "azerty",
       role: "client",
       confirm: "true",
@@ -38,7 +38,7 @@ describe("Testing For EndPoint Login", () => {
   });
   test("login successFully", async () => {
     const res = await request(app).post("/api/auth/login").send({
-      email: "8acb97149d@inboxmail.life",
+      email: "26b7cabcxtyd8@inboxmail.life",
       password: "azerty",
     });
     expect(res.statusCode).toBe(200);
